@@ -10,20 +10,15 @@
   <div class="container">
 
       <div class="row justify-content-center">
-        <div class="col-md-8">
-          {{--
-          <h5>imagen prueba</h5>
-          <img src="{{url('modules/icommerceopenpay/img/openpay.png')}}" alt="test-img">
-          --}}
-          
+        <div class="col-lg-9">
+         
           @include('icommerceopenpay::frontend.partials.form')
           
-
         </div>
 
      </div>
      <div class="row justify-content-center">
-        <div class="col-md-8">
+        <div class="col-lg-9">
            @include('icommerceopenpay::frontend.partials.loading')
         </div>
      </div>

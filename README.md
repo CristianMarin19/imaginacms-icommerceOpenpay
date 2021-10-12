@@ -19,6 +19,18 @@ php artisan module:enable Icommerceopenpay
 php artisan module:seed Icommerceopenpay
 ```
 
+## FRONTEND
+
+### Styles (Compile Theme)
+```bash
+npm run dev
+```
+
+### Publish Module
+```bash
+php artisan module:publish Icommerceopenpay
+```
+
 ## Configurations
 	- merchantId
     - publicKey

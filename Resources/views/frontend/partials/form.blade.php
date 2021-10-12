@@ -3,20 +3,22 @@
 
     <div class="card">
 
-      <div class="card-header">
+      <div class="card-header font-weight-bold text-uppercase">
         Openpay - Bienvenido
       </div>
 
-      <div class="card-body bg-light">
+      <div class="card-body">
 
-        {{--
-        <div class="row">
-
-          <div class="col-xs-12 col-md-6"><h6>Tarjetas de crédito</h6> </div>
-          <div class="col-xs-12 col-md-6"><h6>Tarjetas de débito</h6></div>
-
+        <div class="d-flex flex-row mb-3">
+            <div class="tj-cred">
+              <h6>Tarjetas de crédito</h6> 
+              <x-media::single-image src="{{url('modules/icommerceopenpay/img/cards1.png')}}" />
+            </div>
+            <div class="tj-deb px-5">
+               <h6>Tarjetas de débito</h6>
+              <x-media::single-image src="{{url('modules/icommerceopenpay/img/cards2.png')}}" />
+            </div>
         </div>
-        --}}
 
         <div class="form-row">
            <div class="form-group col-md-6">
@@ -57,24 +59,32 @@
                   </select>
                 </div>
                 <div class="col-xs-12 col-md-6">
-                  <label>Año</label>
-                  <input type="number" min="21" max="30" class="form-control" placeholder="Ultimos 2 digitos" data-openpay-card="expiration_year">
+                  <label>Año (Ejm: 21,22)</label>
+                  <input type="number" min="21" max="30" class="form-control" placeholder="2 digitos" data-openpay-card="expiration_year">
                 </div>
               </div>
             </div>
-            <div class="form-group col-md-6">
+            <div class="form-group col-md-3">
               <label>Código de seguridad</label>
-              <input type="text" class="form-control w-50" placeholder="3 dígitos" autocomplete="off" data-openpay-card="cvv2">
+              <input type="text" class="form-control" placeholder="3 dígitos" autocomplete="off" data-openpay-card="cvv2">
+            </div>
+            <div class="form-group col-md-3 d-flex align-items-center">
+              <x-media::single-image src="{{url('modules/icommerceopenpay/img/cvv.png')}}" />
             </div>
 
         </div>
-        {{--
-        <div class="d-flex justify-content-end">
-            <div class="logo">Transacciones realizadas vía:</div>
+       
+        <div class="d-flex justify-content-between mt-1">
+            <div class="logo">Transacciones realizadas vía:
+              <x-media::single-image src="{{url('modules/icommerceopenpay/img/openpay.png')}}" />
+            </div>
                         
-            <div class="shield">Tus pagos se realizan de forma segura con encriptación de 256 bits</div>
+            <div class="shield">
+              <x-media::single-image src="{{url('modules/icommerceopenpay/img/security.png')}}" />
+              Tus pagos se realizan de forma segura con encriptación de 256 bits
+            </div>
         </div>
-        --}}
+       
 
         <div class="d-flex justify-content-end">
           <a id="pay-button" class="btn btn-primary cursor-pointer">Pagar: {{formatMoney($config->order->total)}}</a>
