@@ -26,6 +26,7 @@ class OpenpayService
 	 	$conf['reedirectAfterPayment'] = $order->url;
 	 	
 	 	$conf['order'] = $order;
+	 	$conf['transaction'] = $transaction;
 
 	 	return json_decode(json_encode($conf));
                

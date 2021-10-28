@@ -95,6 +95,7 @@ $(document).ready(function () {
     
     let data = {
         orderId:{{$config->order->id}},
+        transactionId:{{$config->transaction->id}},
         clientToken: token,
         deviceId: $('#deviceIdHiddenFieldName').val()
     }

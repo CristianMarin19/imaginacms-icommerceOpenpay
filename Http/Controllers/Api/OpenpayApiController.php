@@ -52,7 +52,7 @@ class OpenpayApiController extends BaseApiController
     * @param 
     * @return result
     */
-    public function createCharge($order,$token,$deviceId){
+    public function createCharge($order,$transaction,$token,$deviceId){
         
        
         try {
@@ -71,7 +71,7 @@ class OpenpayApiController extends BaseApiController
                 'amount' => $order->total,
                 'currency' => $order->currency_code,
                 'description' => openpayGetOrderDescription($order),
-                'order_id' => openpayGetOrderRefCommerce($order),
+                'order_id' => openpayGetOrderRefCommerce($order,$transaction),
                 'device_session_id' => $deviceId,
                 'customer' => $customer
             );

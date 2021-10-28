@@ -149,27 +149,33 @@ class IcommerceOpenpayApiController extends BaseApiController
     */
     public function processPayment(Request $request){
 
-        \Log::info('Icommerceopenpay: Process Payment - INIT =======');
+        \Log::info('Icommerceopenpay: Process Payment - INIT ==============');
 
         try {
              
             $data = $request['attributes'] ?? [];//Get data
 
             $orderId = $data['orderId'];
+            $transactionId = $data['transactionId'];
 
+            // Validate Exist Order Id
             $order = $this->order->find($orderId);
             \Log::info('Icommerceopenpay: OrderID: '.$order->id);
-           
- 
-            $response = $this->openpayApi->createCharge($order,$data['clientToken'],$data['deviceId']);
+
+            // Validate that the transaction is associated with the order
+            $transaction = $order->transactions->find($transactionId);
+            \Log::info('Icommerceopenpay: transactionID: '.$transaction->id);
+            
+
+            $response = $this->openpayApi->createCharge($order,$transaction,$data['clientToken'],$data['deviceId']);
 
             
             if($response['status']=="success"){
                 //Processed
-                $this->updateInformation($orderId,13);
+                $this->updateInformation($orderId,$transactionId,13);
             }else{
                 //failed
-                $this->updateInformation($orderId,7,$response); 
+                $this->updateInformation($orderId,$transactionId,7,$response); 
             }
            
         }catch(\Exception $e){
@@ -182,7 +188,7 @@ class IcommerceOpenpayApiController extends BaseApiController
             \Log::error('Icommerceopenpay: Process Payment - Code: '.$e->getCode());
         }
 
-        \Log::info('Icommerceopenpay: Process Payment - END =======');
+        \Log::info('Icommerceopenpay: Process Payment - END ==============');
 
         return response()->json($response, $status ?? 200);
 
@@ -191,13 +197,12 @@ class IcommerceOpenpayApiController extends BaseApiController
     /**
     * Update Information
     */
-    public function updateInformation($orderId,$newStatusOrder,$response=null){
+    public function updateInformation($orderId,$transactionId,$newStatusOrder,$response=null){
 
         \Log::info('Icommerceopenpay: Updating Information');
 
         \Log::info('Icommerceopenpay: New Status Order: '.$newStatusOrder);
 
-        $transactionId = TransEnti::where('order_id',$orderId)->latest()->first()->id;
         $externalStatus = $response["error"] ?? "";
         $externalCode = $response["code"] ?? "";
 

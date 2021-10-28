@@ -79,9 +79,9 @@ if (!function_exists('openpayIsProductionMode')) {
 if (!function_exists('openpayGetOrderRefCommerce')) {
 
     
-    function openpayGetOrderRefCommerce($order){
+    function openpayGetOrderRefCommerce($order,$transaction){
 
-        $reference = $order->id; //Just testing
+        $reference = $order->id."-".$transaction->id;
         return $reference;
     }
 
