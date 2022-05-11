@@ -10,8 +10,12 @@ if (!function_exists('openpayGetConfiguration')) {
  	function openpayGetConfiguration(){
 
         $paymentName = config('asgard.icommerceopenpay.config.paymentName');
-        $attribute = array('name' => $paymentName);
-        $paymentMethod = app("Modules\Icommerce\Repositories\PaymentMethodRepository")->findByAttributes($attribute); 
+        
+        // Params to Get Item
+        $params['filter'] = [
+            'field' => 'name'
+        ];
+        $paymentMethod = app("Modules\Icommerce\Repositories\PaymentMethodRepository")->getItem($paymentName,json_decode(json_encode($params)));
         
         return $paymentMethod;
     }
