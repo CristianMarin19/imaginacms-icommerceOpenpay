@@ -1,10 +1,10 @@
-<form action="#" method="POST" id="payment-form">
+<form action="#" method="POST" id="payment-form" style="display:none">
    <input type="hidden" name="token_id" id="token_id">
 
     <div class="card">
 
       <div class="card-header font-weight-bold text-uppercase">
-        Openpay - Bienvenido
+        Tarjeta de Credito o Debito
       </div>
 
       <div class="card-body">
@@ -87,7 +87,7 @@
        
 
         <div class="d-flex justify-content-end">
-          <a id="pay-button" class="btn btn-primary cursor-pointer">Pagar: {{formatMoney($config->order->total)}}</a>
+          <a id="pay-button" class="btn btn-primary cursor-pointer btn-pay">Pagar: {{formatMoney($config->order->total)}}</a>
         </div>
 
         

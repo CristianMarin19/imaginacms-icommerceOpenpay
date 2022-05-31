@@ -10,7 +10,7 @@
 
 		.logo,.shield{
 			img{
-				width: auto;
+				width: auto !important;
 			}
 		}
 	}
@@ -19,8 +19,9 @@
 		font-size: 12px;
 	}
 
-	#pay-button{
+	.btn-pay{
 		background-color: #e51f04;
 		border-color: #e51f04;
 	}
+
 }
