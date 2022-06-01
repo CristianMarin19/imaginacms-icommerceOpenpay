@@ -25,6 +25,10 @@ return [
         'merchant id' => 'Merchant Id',
         'public key' => 'Public Key',
         'private key' => 'Private Key',
+        'Webhook Verification Code' => 'Codigo de Verificación para Webhooks'
+    ],
+    'formHints' => [
+        'Webhook Verification Code' => 'El código se guardará cuando se agregue la URL del webhook en el panel del usuario en Openpay'
     ],
     'messages' => [
     ],

@@ -82,6 +82,15 @@ return [
                 'label' => 'icommerceopenpay::icommerceopenpays.formFields.private key'
             ]
         ],
+        'webhookVerificationCode' => [
+          'value' => null,
+            'name' => 'webhookVerificationCode',
+            'isFakeField' => true,
+            'type' => 'input',
+            'props' => [
+                'label' => 'icommerceopenpay::icommerceopenpays.formFields.Webhook Verification Code'
+            ]
+        ],
         'mode' => [
             'value' => 'sandbox',
             'name' => 'mode',

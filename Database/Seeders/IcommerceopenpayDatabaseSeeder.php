@@ -37,6 +37,7 @@ class IcommerceopenpayDatabaseSeeder extends Seeder
             $options['mode'] = "sandbox";
             $options['minimunAmount'] = 0;
             $options['maximumAmount'] = null;
+            $options['webhookVerificationCode'] = null;
       
             $titleTrans = 'icommerceopenpay::icommerceopenpays.single';
             $descriptionTrans = 'icommerceopenpay::icommerceopenpays.description';
