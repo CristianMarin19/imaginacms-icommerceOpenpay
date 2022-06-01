@@ -96,6 +96,26 @@ if (!function_exists('openpayGetOrderRefCommerce')) {
 }
 
 /**
+* Get Infor Reference From Commerce
+* @param $reference
+* @return array
+*/
+if (!function_exists('openpayGetInforRefCommerce')) {
+
+    
+    function openpayGetInforRefCommerce($reference){
+
+        $result = explode('-',$reference);
+
+        $infor['orderId'] = $result[0];
+        $infor['transactionId'] = $result[1];
+
+        return $infor;
+    }
+
+}
+
+/**
 * Decript url to get data   
 * @param  $eUrl
 * @return array
