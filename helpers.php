@@ -85,7 +85,11 @@ if (!function_exists('openpayGetOrderRefCommerce')) {
     
     function openpayGetOrderRefCommerce($order,$transaction){
 
-        $reference = $order->id."-".$transaction->id;
+        /*
+        * Important: If you redirect to PSE with an order number and try to redirect again with that same order number, Openpay returns the url for PSE but when you enter that URL it shows a 404.
+        */
+        $reference = $order->id."-".$transaction->id."-".time();
+        //$reference = $order->id."-".$transaction->id;
         return $reference;
     }
 
