@@ -28,8 +28,65 @@ class OpenpayService
 	 	$conf['order'] = $order;
 	 	$conf['transaction'] = $transaction;
 
+	 	$conf['paymentModes'] = config('asgard.icommerceopenpay.config.paymentModes');
+
 	 	return json_decode(json_encode($conf));
                
 	}
+
+	/**
+    * Save verification code in method configuration
+    * @param $request (Openpay)
+    * @param $paymentMethod (configuration)
+    * @return
+    */
+	public function saveVerificationCode($request,$paymentMethod){
+		
+		if($request->verification_code){
+			\Log::info('IcommerceOpenpay: Services|OpenpayService|saveVerificationCode|Code: '.$request->verification_code);
+
+			// Add verfication code
+			$options = $paymentMethod->options;
+			$options->webhookVerificationCode = $request->verification_code;
+
+			//Save options
+			$paymentMethod->options = $options;
+			$paymentMethod->save();
+
+		}
+
+	}
+
+	/**
+     * Get Status to Order
+     * @param 
+     * @return Int 
+     */
+    public function getStatusOrder($type){
+
+        switch ($type) {
+
+            case "charge.succeeded"://Indica que el cargo se ha completado (tarjeta, banco o tienda)
+                $newStatus = 13; //processed
+            break;
+
+            case "charge.refunded": //Un cargo a tarjeta fue reembolzado.
+                $newStatus = 8; //refunded
+            break;
+
+            case "charge.failed": //Un cargo a tarjeta fue fallido,expirado
+                $newStatus = 7; //failed
+            break;
+
+            default:
+            	$newStatus = 1; //pending
+
+        }
+        
+        \Log::info('IcommerceOpenpay: Services|OpenpayService|getStatusOrder|NewStatus: '.$newStatus);
+
+        return $newStatus; 
+
+    }
 
 }
