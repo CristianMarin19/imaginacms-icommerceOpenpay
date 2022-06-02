@@ -20,6 +20,7 @@ return [
         'mode' => 'Mode',
     ],
     'form' => [
+        'select payment mode' => 'Seleccione el modo en que desea pagar'
     ],
     'formFields' => [
         'merchant id' => 'Merchant Id',
