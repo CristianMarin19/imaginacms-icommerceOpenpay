@@ -39,10 +39,10 @@ php artisan module:publish Icommerceopenpay
 ## Webhooks - Documentation
 https://documents.openpay.co/notificaciones/
 
-## Webhooks - Create - (To add URL SANDBOX)
+## Webhooks - Create - (To add URL - Example enviroment: SANDBOX)
 https://sandbox-dashboard.openpay.co/settings
 
-## WebHook URL to confirmation(PSE)
+## WebHook URL to confirmation
 https://mydomain/api/icommerceopenpay/v1/confirmation
 
 ## WebHook - Confirmation Code
