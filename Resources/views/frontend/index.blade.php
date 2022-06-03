@@ -9,19 +9,37 @@
 <div class="icommerce_openpay icommerce_openpay_index py-4">
   <div class="container">
 
-      <div class="row justify-content-center">
+    <div class="method-title text-center">
+      <h2>Bienvenido - OpenPay</h2>
+    </div>
+    
+    {{--Select Payment Modes--}}
+    <div class="row justify-content-center">
         <div class="col-lg-9">
-         
-          @include('icommerceopenpay::frontend.partials.form')
-          
+           @include('icommerceopenpay::frontend.partials.payment-modes')
         </div>
+    </div>
 
-     </div>
-     <div class="row justify-content-center">
+    {{--PSE--}}
+    <div class="row justify-content-center">
+        <div class="col-lg-9">
+          @include('icommerceopenpay::frontend.partials.pse')
+        </div>
+    </div>
+
+    {{--Form Debit and Credits--}}
+    <div class="row justify-content-center">
+        <div class="col-lg-9">
+          @include('icommerceopenpay::frontend.partials.form')
+        </div>
+    </div>
+    
+    {{--Loading--}}
+    <div class="row justify-content-center">
         <div class="col-lg-9">
            @include('icommerceopenpay::frontend.partials.loading')
         </div>
-     </div>
+    </div>
 
   </div>
 </div>
@@ -53,6 +71,29 @@ $(document).ready(function () {
   }
 
   /*
+  * Event - Select payment mode
+  */
+  $('#selectPaymentMode').on('change', function() {
+    let selectMode = $('#selectPaymentMode').val();
+    
+    if(selectMode==0){
+      $('#pse-form').hide();
+      $('#payment-form').hide();
+    }
+
+    if(selectMode=="cards"){
+      $('#pse-form').hide();
+      $('#payment-form').show();
+    }
+
+    if(selectMode=="pse"){
+      $('#payment-form').hide();
+      $('#pse-form').show();
+    }
+    
+  });
+
+  /*
   * Event Click Pay Button
   */
   $('#pay-button').on('click', function(event) {
@@ -62,7 +103,18 @@ $(document).ready(function () {
   });
 
   /*
-  * Sucess
+  * Event Click PSE pay button
+  */
+  $('#pse-pay-button').on('click', function(event) {
+    event.preventDefault();
+    $("#pse-pay-button").prop( "disabled", true);
+    processPaymentPse()
+  });
+
+  
+
+  /*
+  * Sucess Process Debit and Credits Cards
   */
   var successCallback = function(response) {
     //console.warn(response)
@@ -72,7 +124,7 @@ $(document).ready(function () {
   };
 
   /*
-  * Error
+  * Error Process Debit and Credits Cards
   */
   var errorCallback = function(response) {
     //console.warn(response)
@@ -84,11 +136,13 @@ $(document).ready(function () {
   };
 
   /*
-  * API - Process Payment
+  * API - Process Payment - Debit and Credits Cards
   */
   async function processPayment(token){
 
+    $("#paymentModes").hide();
     $("#pay-button").hide();
+
     $("#loadingPayment").show();
 
     let url = "{{route('icommerceopenpay.api.openpay.processPayment')}}"
@@ -123,11 +177,60 @@ $(document).ready(function () {
 
       }else{
         //$("#btnPay").show();
+        $("#paymentModes").show();
         alert("ERROR: "+result.error)
       }
 
-      finishedPayment()
+      let redirect = "{{$config->reedirectAfterPayment}}";
+      finishedPayment(redirect)
 
+    }
+   
+
+   
+  }
+
+   /*
+  * API - Process Payment PSE
+  */
+  async function processPaymentPse(){
+
+    $("#paymentModes").hide();
+    $("#pse-pay-button").hide();
+
+    $("#loadingPayment").show();
+
+    let url = "{{route('icommerceopenpay.api.openpay.processPaymentPse')}}"
+    
+    let data = {
+        orderId:{{$config->order->id}},
+        transactionId:{{$config->transaction->id}}
+    }
+    
+    // FETCH
+    let response = await fetch(url, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json;charset=utf-8'
+      },
+      body: JSON.stringify({attributes:data})
+    });
+
+    let result = await response.json();
+    console.warn(result)
+
+    $("#loadingPayment").hide();
+    
+    // CHECK RESULT
+    if(result){
+      if(result.status=="success"){
+        finishedPayment(result.pse.url)
+      }else{
+        $("#paymentModes").show();
+        $("#pse-pay-button").show();
+        alert("Ha ocurrido un error al obtener la información para PSE")
+        console.warn("ERROR: "+result.error)
+      }
     }
    
 
@@ -136,9 +239,9 @@ $(document).ready(function () {
 
 
   /*
-  * Reedirect to Order
+  * Reedirect to order or to PSE
   */
-  function finishedPayment(){
+  function finishedPayment(redirect){
 
     $('#dialogTitle').text("Reedireccionando...");
     $("#loadingPayment .alert").removeClass("alert-warning");
@@ -146,7 +249,6 @@ $(document).ready(function () {
 
     $("#loadingPayment").show();
 
-    let redirect = "{{$config->reedirectAfterPayment}}";
     window.location.href = redirect;
 
   }

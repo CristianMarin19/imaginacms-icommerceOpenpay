@@ -14,5 +14,15 @@ $router->group(['prefix' => 'icommerceopenpay/v1'], function (Router $router) {
         'uses' => 'IcommerceOpenpayApiController@processPayment',
     ]);
 
+    $router->post('/processPaymentPse', [
+        'as' => 'icommerceopenpay.api.openpay.processPaymentPse',
+        'uses' => 'IcommerceOpenpayApiController@processPaymentPse',
+    ]);
+
+    $router->post('/confirmation', [
+        'as' => 'icommerceopenpay.api.openpay.confirmation',
+        'uses' => 'IcommerceOpenpayApiController@confirmation',
+    ]);
+
 
 });

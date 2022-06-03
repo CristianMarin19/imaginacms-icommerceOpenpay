@@ -54,9 +54,10 @@ class OpenpayApiController extends BaseApiController
     */
     public function createCharge($order,$transaction,$token,$deviceId){
         
+        \Log::info('Icommerceopenpay: OpenpayApi|createCharge');
        
         try {
-            \Log::info('Icommerceopenpay: Create Charge');
+            
 
              // create object customer
             $customer = array(
@@ -92,7 +93,64 @@ class OpenpayApiController extends BaseApiController
 
         } catch (\OpenpayApiTransactionError | \OpenpayApiRequestError | \OpenpayApiConnectionError | \OpenpayApiAuthError | \OpenpayApiError | \Exception $e) {
 
-            \Log::info('Icommerceopenpay: Create Charge - ERROR: '.$e->getMessage().' Code:'.$e->getErrorCode());
+            \Log::info('Icommerceopenpay: OpenpayApi|createCharge|ERROR: '.$e->getMessage().' Code:'.$e->getErrorCode());
+            //error_log('ERROR ' . $e->getCategory() . ': ' . $e->getMessage(), 0);
+            $response = [
+                'status' => 'error',
+                'error' => $e->getMessage(),
+                'code' => $e->getErrorCode(),
+            ];
+        }
+
+        return $response;
+    }
+
+
+    /**
+    * Create PSE Request
+    * @param 
+    * @return result
+    */
+    public function createPseRequest($order,$transaction){
+
+        \Log::info('Icommerceopenpay: OpenpayApi|createPseRequest');
+       
+        try {
+            
+            $customer = array(
+                'name' => $order->first_name,
+                'last_name' => $order->last_name,
+                'email' => $order->email,
+                'phone_number' => $order->phone ?? '',
+                'requires_account' => false
+            );
+
+            $pseRequest = array(
+                'amount' => $order->total,
+                'currency' => $order->currency_code,
+                'description' => openpayGetOrderDescription($order),
+                'order_id' => openpayGetOrderRefCommerce($order,$transaction),
+                'iva' => $order->tax_amount ?? 0,
+                'redirect_url' => $order->url,
+                'customer' => $customer
+            );
+
+            $pse = $this->gateway->pses->create($pseRequest);
+
+            // Format response
+            $response = [
+                'status'=> 'success',
+                'pse' => [
+                    'url' => $pse->redirect_url,
+                    'orderId' => $pse->orderid 
+                ]
+            ];
+
+            \Log::info('Icommerceopenpay: OpenpayApi|createPseRequest|PSE URL: OK');
+
+        } catch (\OpenpayApiTransactionError | \OpenpayApiRequestError | \OpenpayApiConnectionError | \OpenpayApiAuthError | \OpenpayApiError | \Exception $e) {
+
+            \Log::info('Icommerceopenpay: OpenpayApi|createPseRequest|ERROR: '.$e->getMessage().' Code:'.$e->getErrorCode());
             //error_log('ERROR ' . $e->getCategory() . ': ' . $e->getMessage(), 0);
             $response = [
                 'status' => 'error',
