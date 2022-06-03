@@ -78,6 +78,22 @@ class OpenpayService
                 $newStatus = 7; //failed
             break;
 
+            case "charge.cancelled": // Un cargo cancelado
+                $newStatus = 3; //canceled
+            break;
+
+            case "charge.rescored.to.decline": // Informa cuando a un cargo le es recalculado su score y es declinado.
+                $newStatus = 5; //denied
+            break;
+
+            case "chargeback.accepted": //El contracargo se ha perdido. Se ha creado una transacción tipo contracargo que descontará los fondos de tu cuenta.
+                $newStatus = 10; //chargeback
+            break;
+
+            case "transaction.expired": //OJO: Este no aparece en la documentacion, fue porque llegó en el log y se agrego
+                $newStatus = 14; //expired
+            break;
+
             default:
             	$newStatus = 1; //pending
 
