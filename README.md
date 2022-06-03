@@ -36,16 +36,19 @@ php artisan module:publish Icommerceopenpay
     - publicKey
     - privateKey
 
-## Webhooks - Documentation
+## Webhooks
+#### Documentation
 https://documents.openpay.co/notificaciones/
 
-## Webhooks - Create - (To add URL - Example enviroment: SANDBOX)
+#### Create - (To add URL - Example enviroment: SANDBOX)
 https://sandbox-dashboard.openpay.co/settings
 
-## WebHook URL to confirmation
+#### URL to confirmation
+```bash
 https://mydomain/api/icommerceopenpay/v1/confirmation
+```
 
-## WebHook - Confirmation Code
+#### Confirmation Code
 The verification code will be saved in the payment method configurations automatically
 
 ## Sandbox
