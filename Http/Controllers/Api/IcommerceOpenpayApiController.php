@@ -171,15 +171,6 @@ class IcommerceOpenpayApiController extends BaseApiController
 
             $response = $this->openpayApi->createCharge($order,$transaction,$data['clientToken'],$data['deviceId']);
 
-            /*
-            if($response['status']=="success"){
-                //Processed
-                $this->updateInformation($orderId,$transactionId,13);
-            }else{
-                //failed
-                $this->updateInformation($orderId,$transactionId,7,$response); 
-            }
-            */
            
         }catch(\Exception $e){
 
