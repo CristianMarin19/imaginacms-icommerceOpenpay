@@ -42,7 +42,7 @@ class IcommerceopenpayServiceProvider extends ServiceProvider
         $this->publishConfig('icommerceopenpay', 'config');
         $this->publishConfig('icommerceopenpay', 'crud-fields');
 
-        $this->loadMigrationsFrom(__DIR__ . '/../Database/Migrations');
+        //$this->loadMigrationsFrom(__DIR__ . '/../Database/Migrations');
     }
 
     /**
