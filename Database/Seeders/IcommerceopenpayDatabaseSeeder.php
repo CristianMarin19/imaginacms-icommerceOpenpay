@@ -18,6 +18,8 @@ class IcommerceopenpayDatabaseSeeder extends Seeder
         
         Model::unguard();
 
+        $this->call(IcommerceopenpayModuleTableSeeder::class);
+        
         if(!is_module_enabled('Icommerceopenpay')){
             $this->command->alert("This module: Icommerceopenpay is DISABLED!! , please enable the module and then run the seed");
             exit();
