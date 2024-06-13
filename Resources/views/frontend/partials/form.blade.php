@@ -76,7 +76,7 @@
        
         <div class="d-flex justify-content-between mt-1">
             <div class="logo">Transacciones realizadas vía:
-              <x-media::single-image src="{{url('modules/icommerceopenpay/img/openpay.png')}}" />
+              <x-media::single-image src="{{url('modules/icommerceopenpay/img/openpay-2024.jpg')}}" />
             </div>
                         
             <div class="shield">
