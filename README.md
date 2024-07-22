@@ -49,7 +49,9 @@ https://mydomain/api/icommerceopenpay/v1/confirmation
 ```
 
 #### Confirmation Code
-The verification code will be saved in the payment method configurations automatically
+ - The verification code will be saved in the payment method configurations automatically
+ - Remember verify the code in the openpay admin panel
+ - You can find the code in the payment method configuration or in laravel log file
 
 ## Sandbox
 Account: https://sandbox-dashboard.openpay.co
