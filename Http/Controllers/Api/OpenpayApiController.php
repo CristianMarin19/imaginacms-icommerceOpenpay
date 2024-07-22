@@ -9,7 +9,7 @@ use Illuminate\Http\Response;
 // Base Api
 use Modules\Ihelpers\Http\Controllers\Api\BaseApiController;
 
-use Openpay\Data\Client as Openpay;
+use Openpay\Data\Openpay;
 
 class OpenpayApiController extends BaseApiController
 {
@@ -39,7 +39,8 @@ class OpenpayApiController extends BaseApiController
         $gateway = Openpay::getInstance(
             $paymentMethod->options->merchantId, 
             $paymentMethod->options->privateKey,
-            'CO'
+            'CO',
+            request()->ip()
         );
 
         return $gateway;
@@ -59,10 +60,10 @@ class OpenpayApiController extends BaseApiController
         try {
             
 
-             // create object customer
+            //create object customer
             $customer = array(
-                'name' => $order->first_name,
-                'last_name' => $order->last_name,
+                'name' => empty($order->first_name) ? "-" : $order->first_name,
+                'last_name' => empty($order->last_name) ? "-" : $order->last_name,
                 'email' => $order->email
             );
             
@@ -93,6 +94,7 @@ class OpenpayApiController extends BaseApiController
 
         } catch (\OpenpayApiTransactionError | \OpenpayApiRequestError | \OpenpayApiConnectionError | \OpenpayApiAuthError | \OpenpayApiError | \Exception $e) {
 
+            //dd($e);
             \Log::info('Icommerceopenpay: OpenpayApi|createCharge|ERROR: '.$e->getMessage().' Code:'.$e->getErrorCode());
             //error_log('ERROR ' . $e->getCategory() . ': ' . $e->getMessage(), 0);
             $response = [
