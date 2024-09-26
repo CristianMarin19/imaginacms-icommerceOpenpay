@@ -178,6 +178,8 @@ $(document).ready(function () {
       }else{
         //$("#btnPay").show();
         $("#paymentModes").show();
+        console.warn("ERROR - PROCESS PAYMENT: "+result.error)
+        //alert("Ha ocurrido un error al intentar ejecutar el pago")
         alert("ERROR: "+result.error)
       }
 
