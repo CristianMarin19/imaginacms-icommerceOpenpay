@@ -16,8 +16,8 @@ class CacheIcommerceOpenpayDecorator extends BaseCacheDecorator implements Icomm
 
     public function calculate($parameters, $conf)
     {
-        return $this->remember(function () use ($parameters, $conf) {
-            return $this->repository->calculate($parameters, $conf);
-        });
+       
+        return $this->repository->calculate($parameters, $conf);
+        
     }
 }
