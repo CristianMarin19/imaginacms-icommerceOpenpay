@@ -1,6 +1,6 @@
 <?php
 
-namespace Modules\Icommercepayzen\Database\Seeders;
+namespace Modules\Icommerceopenpay\Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use Illuminate\Database\Eloquent\Model;
@@ -54,16 +54,16 @@ class IcommerceopenpaySeeder extends Seeder
       $this->addTranslation($paymentMethod, 'es', $titleTrans, $descriptionTrans);
 
     } else {
-      if ($paymentMethod->description != trans('icommercepayzen::icommercepayzens.iaDescription', [], locale())) {
+      if ($paymentMethod->description != trans('icommerceopenpay::icommerceopenpays.iaDescription', [], locale())) {
         $data = array(
-          'es' => ['description' => trans('icommercepayzen::icommercepayzens.iaDescription', [], 'es')],
-          'en' => ['description' => trans('icommercepayzen::icommercepayzens.iaDescription', [], 'en')]
+          'es' => ['description' => trans('icommerceopenpay::icommerceopenpays.iaDescription', [], 'es')],
+          'en' => ['description' => trans('icommerceopenpay::icommerceopenpays.iaDescription', [], 'en')]
         );
         $paymentMethod = $PaymentMethodRepository->update($paymentMethod, $data);
         //Instance file service
         $fileService = app("Modules\Media\Services\FileService");
         //Instance the file path
-        $filePath = 'Modules/Icommercepayzen/Resources/img/payzen_default.png';
+        $filePath = 'Modules/Icommerceopenpay/Resources/img/openpay_default.png';
         if (Storage::disk('local')->exists($filePath)) {
           // Obtener el contenido del archivo
           $fileContents = Storage::disk('local')->get($filePath);
