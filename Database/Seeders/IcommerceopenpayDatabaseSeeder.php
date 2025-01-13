@@ -14,7 +14,7 @@ class IcommerceopenpayDatabaseSeeder extends Seeder
   public function run()
   {
     ProcessSeeds::dispatch([
-      "baseClass" => "\Modules\Icommercepayzen\Database\Seeders",
+      "baseClass" => "\Modules\Icommerceopenpay\Database\Seeders",
       "seeds" => ["IcommerceopenpayModuleTableSeeder", "IcommerceopenpaySeeder"]
     ]);
   }
